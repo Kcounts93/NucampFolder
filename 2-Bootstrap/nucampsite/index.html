@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-4 col-sm-3 col-md-2 align-self-center">
-                    <img src="img/logo.png" class="img-fluid" />
+                    <img src="img/logo.png" class="img-fluid" alt="logo" />
                 </div>
                 <div class="col">
                     <h1>NuCamp</h1>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="col col-md-4 col-xl-2 mt-4">
                     <a href="#reserveForm">
-                        <button class="btn btn-info btn-large">Reserve Now</button>
+                        <button class="btn btn-info btn-large"><a href="#reserveForm"></a>Reserve Now</button>
                     </a>
                 </div>
             </div>
@@ -36,7 +36,7 @@
 
     <nav class="navbar navbar-expand-sm navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="img/logo.png" height="30" width="30" /></a>
+            <a class="navbar-brand" href="#"><img src="img/logo.png" height="30" width="30" alt="logo" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nucampNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -72,9 +72,11 @@
             </div>
             <div class="col">
                 <div class="media">
+                    <div class="media-body align-self-center">
                     <h3>React Lake Campground</h3>
                     <p class="d-none d-sm-block">Nestled in the foothills of the Chrome Mountains, this campground on the shores of the pristine React Lake is a favorite for fly fishers.</p>
-                    <img class="d-flex ml-3 img-thumbnail" src="img/react-lake-thumb.jpg"  />
+                    </div>
+                    <img class="d-flex ml-3 img-thumbnail" src="img/react-lake-thumb.jpg" alt="react lake image"  />
                 </div>
             </div>
         </div>
@@ -115,7 +117,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-6 col-form-label" for="date">Date</label>
                                 <div class="col">
-                                    <input class="form-control" type="date" id="date" name="date" placeholder="date">
+                                    <input class="form-control" type="date" id="date" name="date">
                                 </div>
                             </div>
                             <div class="form-group row">
