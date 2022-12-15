@@ -21,10 +21,10 @@ h2 {
   color: $color-primary;
 }
 
-  header {
-    h2 {
-        color: $color-pale;
-    }
+header {
+  h2 {
+    color: $color-pale;
+  }
 }
 
 .site-footer {
@@ -34,7 +34,12 @@ h2 {
 
 .jumbotron {
   padding: 30px;
-  background-image: linear-gradient(to right, $color-secondary, $color-primary, $color-dark);
+  background-image: linear-gradient(
+    to right,
+    $color-secondary,
+    $color-primary,
+    $color-dark
+  );
   color: white;
   margin: 0;
 }
