@@ -1,3 +1,5 @@
+
+// Carousel Function
 $(function() {
     $(".carousel").carousel( { interval: 2000 } );
         $("#carouselButton").click(function(){
@@ -11,4 +13,14 @@ $(function() {
                 $("#carouselButton").children("i").addClass("fa-pause"); 
             }
         });
+});
+
+// Reserve Button Modal
+$("#reserveButton").click(function(){
+    $('#reserveModal').modal('show')
+});
+
+// Login Modal 
+$("#loginButton").click(function(){
+    $('#loginModal').modal('show')
 });
