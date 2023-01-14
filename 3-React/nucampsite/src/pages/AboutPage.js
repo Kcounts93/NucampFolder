@@ -54,7 +54,11 @@ const AboutPage = () => {
           </Card>
         </Col>
       </Row>
-      <Row className="row-content"></Row>
+      <Row className="row-content">
+        <Col xs="12">
+          <h3>Community Partners</h3>
+        </Col>
+      </Row>
     </Container>
   );
 };
