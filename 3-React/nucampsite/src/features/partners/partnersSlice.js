@@ -1,5 +1,5 @@
-import { PARTNERS } from "../../app/shared/PARTNERS";
 import { createSlice } from "@reduxjs/toolkit";
+import { PARTNERS } from "../../app/shared/PARTNERS";
 
 const initialState = {
   partnersArray: PARTNERS,
@@ -10,7 +10,7 @@ const partnersSlice = createSlice({
   initialState,
 });
 
-export const partnersReducer = partnersSlice.reducer();
+export const partnersReducer = partnersSlice.reducer;
 
 export const selectAllPartners = (state) => {
   return state.partners.partnersArray;
