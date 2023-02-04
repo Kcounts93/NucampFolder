@@ -10,7 +10,7 @@ import {
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { validateCommentForm } from "../../utils/validateCommentForm";
 import { useDispatch } from "react-redux";
-import { addComment } from "../comments/commentsSlice";
+import { postComment } from "../comments/commentsSlice";
 
 const CommentForm = ({ campsiteId }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -23,7 +23,7 @@ const CommentForm = ({ campsiteId }) => {
       text: values.commentText,
       date: new Date(Date.now()).toISOString(),
     };
-    dispatch(addComment(comment));
+    dispatch(postComment(comment));
     console.log("comment: ", comment);
     setModalOpen(false);
   };
