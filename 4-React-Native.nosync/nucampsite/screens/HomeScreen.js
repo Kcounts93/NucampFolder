@@ -1,8 +1,5 @@
 import { ScrollView, Text, View } from "react-native";
 import { Card } from "react-native-elements";
-import { CAMPSITES } from "../shared/campsites";
-import { PROMOTIONS } from "../shared/promotions";
-import { PARTNERS } from "../shared/partners";
 import { useSelector } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 
