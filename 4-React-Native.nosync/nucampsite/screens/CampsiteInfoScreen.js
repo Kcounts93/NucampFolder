@@ -1,7 +1,9 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View, Button, Modal } from "react-native";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RenderCampsite from "../features/campsites/RenderCampsite";
 import { toggleFavorite } from "../features/favorites/favoritesSlice";
+import { Input, Rating } from "react-native-elements";
 
 const CampsiteInfoScreen = ({ route }) => {
   const { campsite } = route.params;
@@ -11,11 +13,42 @@ const CampsiteInfoScreen = ({ route }) => {
 
   const dispatch = useDispatch();
 
+  const [showModal, setShowModal] = useState(false);
+  const [rating, setRating] = useState("5");
+  const [author, setAuthor] = useState("");
+  const [text, setText] = useState("");
+
+  const handleSubmit = () => {
+    const newComment = {
+      author,
+      rating,
+      text,
+      campsiteId: campsite.id,
+    };
+    console.log(newComment);
+    setShowModal(!showModal);
+  };
+
+  const resetForm = () => {
+    setRating("5");
+    setAuthor("");
+    setText("");
+  };
+
   const renderCommentItem = ({ item }) => {
     return (
       <View style={styles.commentItem}>
         <Text style={{ fontSize: 14 }}>{item.text}</Text>
-        <Text style={{ fontSize: 12 }}>{item.rating} Stars</Text>
+        <Rating
+          readonly
+          imageSize={10}
+          startingValue={item.rating}
+          style={{
+            fontSize: 12,
+            alignItems: "flex-start",
+            paddingVertical: "5%",
+          }}
+        />
         <Text style={{ fontSize: 12 }}>
           {`-- ${item.author}, ${item.date}`}
         </Text>
@@ -24,27 +57,82 @@ const CampsiteInfoScreen = ({ route }) => {
   };
 
   return (
-    <FlatList
-      data={comments.commentsArray.filter(
-        (comment) => comment.campsiteId === campsite.id
-      )}
-      renderItem={renderCommentItem}
-      keyExtractor={(item) => item.id.toString()}
-      contentContainerStyle={{
-        marginHorizontal: 20,
-        paddingVertical: 20,
-      }}
-      ListHeaderComponent={
-        <>
-          <RenderCampsite
-            campsite={campsite}
-            isFavorite={favorites.includes(campsite.id)}
-            markFavorite={() => dispatch(toggleFavorite(campsite.id))}
+    <>
+      <FlatList
+        data={comments.commentsArray.filter(
+          (comment) => comment.campsiteId === campsite.id
+        )}
+        renderItem={renderCommentItem}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{
+          marginHorizontal: 20,
+          paddingVertical: 20,
+        }}
+        ListHeaderComponent={
+          <>
+            <RenderCampsite
+              campsite={campsite}
+              isFavorite={favorites.includes(campsite.id)}
+              markFavorite={() => dispatch(toggleFavorite(campsite.id))}
+              onShowModal={() => setShowModal(!showModal)}
+            />
+            <Text style={styles.commentsTitle}>Comments</Text>
+          </>
+        }
+      />
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={showModal}
+        onRequestClose={() => setShowModal(!showModal)}
+      >
+        <View style={styles.modal}>
+          <Rating
+            type="star"
+            ratingCount={5}
+            imageSize={40}
+            showRating
+            startingValue={rating}
+            style={{ paddingVertical: 10 }}
+            onFinishRating={(rating) => setRating(rating)}
           />
-          <Text style={styles.commentsTitle}>Comments</Text>
-        </>
-      }
-    />
+          <Input
+            placeholder="author"
+            leftIcon={{ type: "font-awesome", name: "user-o" }}
+            leftIconContainerStyle={{ paddingRight: 10 }}
+            onChangeText={(rating) => setRating(rating)}
+            value="Author"
+          />
+          <Input
+            placeholder="comment"
+            leftIcon={{ type: "font-awesome", name: "comment-o" }}
+            leftIconContainerStyle={{ paddingRight: 10 }}
+            onChangeText={(rating) => setRating(rating)}
+            value="Comment"
+          />
+          <View style={{ margin: 10 }}>
+            <Button
+              title="Submit"
+              color="#5637DD"
+              onPress={() => {
+                handleSubmit(!showModal);
+                resetForm();
+              }}
+            />
+          </View>
+          <View style={{ margin: 10 }}>
+            <Button
+              onPress={() => {
+                handleSubmit(!showModal);
+                resetForm();
+              }}
+              title="Cancel"
+              color="#808080"
+            />
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
 
@@ -62,6 +150,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: "#fff",
+  },
+  modal: {
+    justifyContent: "center",
+    margin: 40,
   },
 });
 
