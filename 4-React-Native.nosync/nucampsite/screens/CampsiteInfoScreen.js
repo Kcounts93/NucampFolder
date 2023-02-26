@@ -1,22 +1,22 @@
-import { FlatList, StyleSheet, Text, View, Button, Modal } from "react-native";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import RenderCampsite from "../features/campsites/RenderCampsite";
+import { useSelector, useDispatch } from "react-redux";
+import { FlatList, StyleSheet, Text, View, Button, Modal } from "react-native";
 import { toggleFavorite } from "../features/favorites/favoritesSlice";
-import { Input, Rating } from "react-native-elements";
+import { useState } from "react";
+import { Rating, Input } from "react-native-elements";
+import { postComment } from "../features/comments/commentsSlice";
 
 const CampsiteInfoScreen = ({ route }) => {
   const { campsite } = route.params;
-  const comments = useSelector((state) => state.comments);
-
-  const favorites = useSelector((state) => state.favorites);
-
-  const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
-  const [rating, setRating] = useState("5");
+  const [rating, setRating] = useState(5);
   const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
+
+  const comments = useSelector((state) => state.comments);
+  const favorites = useSelector((state) => state.favorites);
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     const newComment = {
@@ -25,12 +25,12 @@ const CampsiteInfoScreen = ({ route }) => {
       text,
       campsiteId: campsite.id,
     };
-    console.log(newComment);
+    dispatch(postComment(newComment));
     setShowModal(!showModal);
   };
 
   const resetForm = () => {
-    setRating("5");
+    setRating(5);
     setAuthor("");
     setText("");
   };
@@ -40,14 +40,10 @@ const CampsiteInfoScreen = ({ route }) => {
       <View style={styles.commentItem}>
         <Text style={{ fontSize: 14 }}>{item.text}</Text>
         <Rating
-          readonly
-          imageSize={10}
+          style={{ alignItems: "flex-start", paddingVertical: "5%" }}
           startingValue={item.rating}
-          style={{
-            fontSize: 12,
-            alignItems: "flex-start",
-            paddingVertical: "5%",
-          }}
+          imageSize={10}
+          readonly
         />
         <Text style={{ fontSize: 12 }}>
           {`-- ${item.author}, ${item.date}`}
@@ -80,6 +76,7 @@ const CampsiteInfoScreen = ({ route }) => {
           </>
         }
       />
+
       <Modal
         animationType="slide"
         transparent={false}
@@ -88,46 +85,46 @@ const CampsiteInfoScreen = ({ route }) => {
       >
         <View style={styles.modal}>
           <Rating
-            type="star"
-            ratingCount={5}
-            imageSize={40}
             showRating
             startingValue={rating}
-            style={{ paddingVertical: 10 }}
+            imageSize={40}
             onFinishRating={(rating) => setRating(rating)}
+            style={{ paddingVertical: 10 }}
           />
           <Input
-            placeholder="author"
+            placeholder="Author"
             leftIcon={{ type: "font-awesome", name: "user-o" }}
             leftIconContainerStyle={{ paddingRight: 10 }}
-            onChangeText={(rating) => setRating(rating)}
-            value="Author"
+            onChangeText={(author) => setAuthor(author)}
+            value
           />
           <Input
-            placeholder="comment"
+            placeholder="Comment"
             leftIcon={{ type: "font-awesome", name: "comment-o" }}
             leftIconContainerStyle={{ paddingRight: 10 }}
-            onChangeText={(rating) => setRating(rating)}
-            value="Comment"
+            onChangeText={(text) => setText(text)}
+            value
           />
+
           <View style={{ margin: 10 }}>
             <Button
-              title="Submit"
-              color="#5637DD"
               onPress={() => {
-                handleSubmit(!showModal);
+                handleSubmit();
                 resetForm();
               }}
+              color="#5637DD"
+              title="Submit"
             />
           </View>
+
           <View style={{ margin: 10 }}>
             <Button
               onPress={() => {
-                handleSubmit(!showModal);
+                setShowModal(!showModal);
                 resetForm();
               }}
-              title="Cancel"
               color="#808080"
+              title="Cancel"
             />
           </View>
         </View>
@@ -144,7 +141,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#43484D",
     padding: 10,
-    paddingTop: 30,
+    paddingtop: 30,
   },
   commentItem: {
     paddingVertical: 10,
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     justifyContent: "center",
-    margin: 40,
+    margin: 20,
   },
 });
 

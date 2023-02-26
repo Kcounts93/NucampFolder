@@ -20,7 +20,11 @@ const RenderCampsite = (props) => {
             color="red"
             raised
             reverse
-            onPress={() => props.onShowModal()}
+            onPress={() =>
+              props.isFavorite
+                ? console.log("Already set as a favorite")
+                : props.markFavorite()
+            }
           />
           <Icon
             name={props.isFavorite ? "pencil" : "pencil"}
@@ -28,11 +32,7 @@ const RenderCampsite = (props) => {
             color="#5637DD"
             raised
             reverse
-            onPress={() =>
-              props.isFavorite
-                ? console.log("Already set as a favorite")
-                : props.markFavorite()
-            }
+            onPress={() => props.onShowModal()}
           />
         </View>
       </Card>
