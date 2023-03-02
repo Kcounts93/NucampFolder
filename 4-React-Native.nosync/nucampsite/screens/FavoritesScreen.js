@@ -43,7 +43,8 @@ const FavoritesScreen = ({ navigation }) => {
                     text: "OK",
                     onPress: () => dispatch(toggleFavorite(campsite.id)),
                   },
-                ]
+                ],
+                { cancelable: false }
               )
             }
           >
