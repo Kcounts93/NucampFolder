@@ -257,6 +257,24 @@ const Main = () => {
             ),
           }}
         />
+
+        <Drawer.Screen
+          name="Favorites"
+          component={FavoritesNavigator}
+          options={{
+            title: "My Favorites",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="heart"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
+        />
+
         <Drawer.Screen
           name="About"
           component={AboutNavigator}
