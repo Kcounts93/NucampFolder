@@ -1,4 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { campsitesReducer } from "../features/campsites/campsitesSlice";
+import { commentsReducer } from "../features/comments/commentsSlice";
+import { partnersReducer } from "../features/partners/partnersSlice";
+import { promotionsReducer } from "../features/promotions/promotionsSlice";
+import { favoritesReducer } from "../features/favorites/favoritesSlice";
 import {
   persistStore,
   persistCombineReducers,
@@ -10,11 +15,6 @@ import {
   REGISTER,
 } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { campsitesReducer } from "../features/campsites/campsitesSlice";
-import { commentsReducer } from "../features/comments/commentsSlice";
-import { partnersReducer } from "../features/partners/partnersSlice";
-import { promotionsReducer } from "../features/promotions/promotionsSlice";
-import { favoritesReducer } from "../features/favorites/favoritesSlice";
 
 const config = {
   key: "root",
