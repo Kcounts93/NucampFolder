@@ -6,6 +6,7 @@ import { baseUrl } from "../shared/baseUrl";
 import logo from "../assets/images/logo.png";
 import * as SecureStore from "expo-secure-store";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as ImageManipulator from "expo-image-manipulator";
 
 const LoginTab = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -147,7 +148,36 @@ const RegisterTab = () => {
       });
       if (capturedImage.assets) {
         console.log(capturedImage.assets[0]);
-        setImageUrl(capturedImage.assets[0].uri);
+        setImageUrl(processImage(capturedImage.assets[0].uri));
+      }
+    }
+  };
+
+  const processImage = async (imgUri) => {
+    const processedImage = await ImageManipulator.manipulateAsync(
+      imgUri,
+      [{ resize: { width: 400 } }],
+      { format: SaveFormat.PNG }
+    );
+    processImage(processedImage);
+    console.log(processedImage);
+    if (processedImage.assets) {
+      setImageUrl(processedImage.uri);
+    }
+  };
+
+  const getImageFromGallery = async () => {
+    const galleryPermission =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (galleryPermission.status === "granted") {
+      const capturedImage = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+      if (capturedImage.assets) {
+        console.log(capturedImage.assets[0]);
+        setImageUrl(processImage(capturedImage.assets[0].uri));
       }
     }
   };
@@ -162,6 +192,7 @@ const RegisterTab = () => {
             style={styles.image}
           />
           <Button title="Camera" onPress={getImageFromCamera} />
+          <Button title="Gallery" onPress={getImageFromGallery} />
         </View>
         <Input
           placeholder="Username"
