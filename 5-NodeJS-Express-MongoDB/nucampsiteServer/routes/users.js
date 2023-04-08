@@ -9,7 +9,7 @@ router.get("/", function (req, res) {
   res.send("respond with a resource");
 });
 
-router.post("/signup", (req, res, next) => {
+router.post("/signup", (req, res) => {
   User.register(
     new User({ username: req.body.username }),
     req.body.password,
