@@ -12,7 +12,7 @@ router.get(
   "/",
   cors.corsWithOptions,
   authenticate.verifyUser,
-  authenticate.saveerifyAdmin,
+  authenticate.verifyAdmin,
   function (req, res, next) {
     User.find({})
       .then(
