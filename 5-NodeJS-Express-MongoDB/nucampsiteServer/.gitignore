@@ -2,3 +2,4 @@ node_modules
 metrics.interim
 bin/server.key
 bin/server.cert
+config.js
